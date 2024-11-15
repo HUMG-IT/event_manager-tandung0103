@@ -9,6 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+flutter_localizations:
+   sdk: flutter 
+   intl: any 
+   localstore: ^1.4.0
+   syncfunsion_flutter_calendar: ^27.1.58
+  
+
 
 dev_dependencies:
   flutter_test:
@@ -16,4 +23,6 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-  uses-material-design: true
+  uses-material-design: true 
+  generate: true
+
