@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class EventModel {
@@ -12,11 +13,12 @@ class EventModel {
     this.id,
     required this.startTime,
     required this.endTime,
-    this.isAllDay = false, //mặc định
-    this.subject = '',
+    required this.isAllDay,
+    required this.subject,
     this.notes,
     this.recurrenceRule,
   });
+
   EventModel copyWith({
     String? id,
     DateTime? startTime,
@@ -62,9 +64,12 @@ class EventModel {
           : null,
     );
   }
+
   String toJson() => json.encode(toMap());
+
   factory EventModel.fromJson(String source) =>
       EventModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
   @override
   String toString() {
     return 'EventModel(id: $id, startTime: $startTime, endTime: $endTime, isAllDay: $isAllDay, subject: $subject, notes: $notes, recurrenceRule: $recurrenceRule)';
@@ -73,6 +78,7 @@ class EventModel {
   @override
   bool operator ==(covariant EventModel other) {
     if (identical(this, other)) return true;
+
     return other.id == id &&
         other.startTime == startTime &&
         other.endTime == endTime &&
@@ -94,9 +100,10 @@ class EventModel {
   }
 }
 
-extension ExtEventModel on EventModel {
+extension EventModelExtensions on EventModel {
   String get formatedStartTimeString =>
-      '${startTime.minute}, ${startTime.day} / ${startTime.month}/ ${startTime.year}';
+      '${startTime.hour}:${startTime.minute.toString().padLeft(2, '0')}, ${startTime.day}/${startTime.month}/${startTime.year}';
+
   String get formatedEndTimeString =>
-      '${endTime.minute}, ${endTime.day} / ${endTime.month}/ ${endTime.year}';
+      '${endTime.hour}:${endTime.minute.toString().padLeft(2, '0')}, ${endTime.day}/${endTime.month}/${endTime.year}';
 }

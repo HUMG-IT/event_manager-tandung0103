@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'event/event_view.dart';
 
 void main() {
@@ -16,8 +17,14 @@ class MainApp extends StatelessWidget {
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
+        GlobalCupertinoLocalizations.delegate,
       ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('vi'), // Vietnamese
+      ],
+      locale: Locale('vi'), // Default locale
+      home: EventView(),
     );
   }
 }

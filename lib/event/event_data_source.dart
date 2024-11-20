@@ -1,35 +1,51 @@
-import 'package:localstore/localstore.dart';
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'event_model.dart';
 
-class EventService {
-  // Tham khảo thêm thư viện localstore của mình tại http://pub.dev
-  final db = Localstore.getInstance(useSupportDir: true);
-  // Tên collection trong localstore (giống như tên bảng)
-  final path = 'events';
-  // Hàm lấy danh sách sự kiên từ localstore
-  Future<List<EventModel>> getAllEvent() async {
-    final eventsMap = await db.collection(path).get();
-    if (eventsMap != null) {
-      return eventsMap.entries.map((entry) {
-        final eventData = entry.value as Map<String, dynamic>;
-        if (!eventData.containsKey('id')) {
-          eventData['id'] = entry.key.split('/').last;
-        }
-        return EventModel.fromMap(eventData);
-      }).toList();
-    }
-    return [];
+class EventDataSource extends CalendarDataSource {
+  EventDataSource(List<EventModel> source) {
+    appointments = source;
   }
 
-  // Hàm luwumootj sự kiện vào localstore
-  Future<void> saveEvent(EventModel item) async {
-    // Nếu id không tồn tại (tạo mới) thì lấy một id ngẫu nhiên
-    item.id ??= db.collection(path).doc().id;
-    await db.collection(path).doc(item.id).set(item.toMap());
+  @override
+  DateTime getStartTime(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.startTime;
   }
 
-  // Hàm xóa một sự kiện từ localstore
-  Future<void> deleteEvent(EventModel item) async {
-    await db.collection(path).doc(item.id).delete();
+  @override
+  DateTime getEndTime(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.endTime;
+  }
+
+  @override
+  String getSubject(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.subject;
+  }
+
+  @override
+  String? getNotes(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.notes;
+  }
+
+  @override
+  bool isAllDay(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.isAllDay;
+  }
+
+  @override
+  String? getRecurrenceRule(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.recurrenceRule;
+  }
+
+  @override
+  Color getColor(int index) {
+    EventModel item = appointments!.elementAt(index);
+    return item.isAllDay ? const Color(0xFFE0E0E0) : Colors.blue;
   }
 }
