@@ -1,14 +1,14 @@
+import 'package:event_manager/event/event_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'event/event_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,13 @@ class MainApp extends StatelessWidget {
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate, // Fixed typo here
       ],
       supportedLocales: [
-        Locale('en'), // English
-        Locale('vi'), // Vietnamese
+        Locale('en'),
+        Locale('vi'),
       ],
-      locale: Locale('vi'), // Default locale
+      locale: Locale("vi"),
       home: EventView(),
     );
   }

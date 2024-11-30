@@ -17,7 +17,6 @@ class _EventViewState extends State<EventView> {
   final eventService = EventService();
   List<EventModel> item = [];
   final calendarController = CalendarController();
-
   @override
   void initState() {
     super.initState();
@@ -71,17 +70,16 @@ class _EventViewState extends State<EventView> {
           ),
           onLongPress: (details) {
             if (details.targetElement == CalendarElement.calendarCell) {
-              // Create a new event
+              // Tạo sự kiện mới
               final newEvent = EventModel(
                 startTime: details.date!,
                 endTime: details.date!.add(const Duration(hours: 1)),
                 subject: 'Sự kiện mới',
                 notes: '',
                 recurrenceRule: '',
-                isAllDay: true, // Fixed issue here
               );
 
-              // Navigate to the event details screen
+              // Điều hướng đến màn hình chi tiết sự kiện
               Navigator.of(context)
                   .push(
                 MaterialPageRoute(
@@ -90,7 +88,7 @@ class _EventViewState extends State<EventView> {
               )
                   .then((value) async {
                 if (value == true) {
-                  // Refresh events after event is created/updated
+                  // Cập nhật lại danh sách sự kiện
                   await loadEvents();
                 }
               });

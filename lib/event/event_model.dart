@@ -1,26 +1,29 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class EventModel {
   String? id;
+  String? event;
   DateTime startTime;
   DateTime endTime;
   bool isAllDay;
   String subject;
-  String? notes;
-  String? recurrenceRule;
+  String notes;
+  String recurrenceRule;
+
   EventModel({
     this.id,
+    this.event,
     required this.startTime,
     required this.endTime,
-    required this.isAllDay,
-    required this.subject,
-    this.notes,
-    this.recurrenceRule,
+    this.isAllDay = true,
+    this.subject = '',
+    required this.notes,
+    required this.recurrenceRule,
   });
 
   EventModel copyWith({
     String? id,
+    String? event,
     DateTime? startTime,
     DateTime? endTime,
     bool? isAllDay,
@@ -30,6 +33,7 @@ class EventModel {
   }) {
     return EventModel(
       id: id ?? this.id,
+      event: event ?? this.event,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       isAllDay: isAllDay ?? this.isAllDay,
@@ -40,8 +44,9 @@ class EventModel {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'id': id,
+      'event': event,
       'startTime': startTime.millisecondsSinceEpoch,
       'endTime': endTime.millisecondsSinceEpoch,
       'isAllDay': isAllDay,
@@ -53,33 +58,34 @@ class EventModel {
 
   factory EventModel.fromMap(Map<String, dynamic> map) {
     return EventModel(
-      id: map['id'] != null ? map['id'] as String : null,
-      startTime: DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int),
-      endTime: DateTime.fromMillisecondsSinceEpoch(map['endTime'] as int),
-      isAllDay: map['isAllDay'] as bool,
-      subject: map['subject'] as String,
-      notes: map['notes'] != null ? map['notes'] as String : null,
-      recurrenceRule: map['recurrenceRule'] != null
-          ? map['recurrenceRule'] as String
-          : null,
+      id: map['id'],
+      event: map['event'],
+      startTime: DateTime.fromMillisecondsSinceEpoch(map['startTime']),
+      endTime: DateTime.fromMillisecondsSinceEpoch(map['endTime']),
+      isAllDay: map['isAllDay'] ?? false,
+      subject: map['subject'] ?? '',
+      notes: map['notes'] ?? '',
+      recurrenceRule: map['recurrenceRule'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory EventModel.fromJson(String source) =>
-      EventModel.fromMap(json.decode(source) as Map<String, dynamic>);
+      EventModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'EventModel(id: $id, startTime: $startTime, endTime: $endTime, isAllDay: $isAllDay, subject: $subject, notes: $notes, recurrenceRule: $recurrenceRule)';
+    return 'EventModel(id: $id, event: $event, startTime: $startTime, endTime: $endTime, isAllDay: $isAllDay, subject: $subject, notes: $notes, recurrenceRule: $recurrenceRule)';
   }
 
   @override
-  bool operator ==(covariant EventModel other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other is EventModel &&
+        other.id == id &&
+        other.event == event &&
         other.startTime == startTime &&
         other.endTime == endTime &&
         other.isAllDay == isAllDay &&
@@ -91,6 +97,7 @@ class EventModel {
   @override
   int get hashCode {
     return id.hashCode ^
+        event.hashCode ^
         startTime.hashCode ^
         endTime.hashCode ^
         isAllDay.hashCode ^

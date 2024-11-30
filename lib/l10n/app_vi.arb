@@ -1,5 +1,6 @@
 {
     "appTitle": "Quản lý sự kiện",
-    "addEvent": "Thêm sự kiện",
-    "eventDetail": "Chi tiết sự kiện"
+    "addEvents": "Thêm sự kiện",
+    "eventDetails": "Chi tiết sự kiện"
 }
+

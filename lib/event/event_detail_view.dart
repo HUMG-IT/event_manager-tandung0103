@@ -21,7 +21,7 @@ class _EventDetailViewState extends State<EventDetailView> {
   void initState() {
     super.initState();
     subjectControler.text = widget.event.subject;
-    notesControler.text = widget.event.notes ?? '';
+    notesControler.text = widget.event.notes;
   }
 
   Future<void> _pickDateTime({required bool isStart}) async {
