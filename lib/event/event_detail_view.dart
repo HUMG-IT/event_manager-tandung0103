@@ -82,7 +82,7 @@ class _EventDetailViewState extends State<EventDetailView> {
     final al = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.event.id == null ? al.addEvent : al.eventDetail),
+        title: Text(widget.event.id == null ? al.addEvents : al.eventDetails),
       ),
       body: SingleChildScrollView(
         child: Padding(
